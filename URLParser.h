@@ -23,7 +23,18 @@
 
 
 
+/*!
+ \struct  URLData
+ \brief   contains the user, password and url fields of a ftp url
+ \author  Fernando Moreira ( f.pinto.moreira@gmail.com );
+ \version xx.xx
+ \date    dd-mm-yyyy - hh:mm GMT
+ 
+ generic ftp url: ftp://[<user>:<password>@]<host>/<url-path>
+ 
+*/
 typedef struct URLData URLData;
+
 
 /*! releases an \e URLData data structure created by the \e ParseFTPURL function
  
