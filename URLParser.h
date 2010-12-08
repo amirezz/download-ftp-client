@@ -48,13 +48,13 @@ void ReleaseURLData( URLData* p_urldata );
 
 /*!
  *  returns a null ended string representing the user field of an ftp url
- *  return \e NULL if no user is declared in the url
+ *  returns \e NULL if no user is declared in the url
  */
 char* getUser( URLData* p_urldata );
 
 /*!
  *  returns a null ended string representing the password field of an ftp url
- *  return \e NULL if no password is declared in the url
+ *  returns \e NULL if no password is declared in the url
  */
 char* getPassword( URLData* p_urldata );
 
@@ -69,7 +69,7 @@ char* getPlainUrl( URLData* p_urldata );
  \remarks   if \e NULL = \e pa_url the function does nothing
  \remarks   if \e pa_url is invalid the function may develop unpredictable behaviour
  \attention not tested
- */
+*/
 URLData* ParseFTPURL( char* pa_url );
 
 

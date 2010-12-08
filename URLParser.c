@@ -56,7 +56,7 @@ void ReleaseURLData( URLData* p_urldata )
 char* getUser( URLData* p_urldata )
 {
     if( !p_urldata )
-        return NULL;
+        return "";
     
     else return p_urldata->pa_user;
 }
@@ -65,7 +65,7 @@ char* getUser( URLData* p_urldata )
 char* getPassword( URLData* p_urldata )
 {
     if( !p_urldata )
-        return NULL;
+        return "";
     
     else return p_urldata->pa_password;
 }
@@ -74,11 +74,10 @@ char* getPassword( URLData* p_urldata )
 char* getPlainUrl( URLData* p_urldata )
 {
     if( !p_urldata )
-        return NULL;
+        return "";
     
     else return p_urldata->pa_plainurl;
 }
-
 
 
 // ParseFTPURL
@@ -96,15 +95,15 @@ URLData* ParseFTPURL( char* pa_url )
      the plain url matches the pa_url content
      */
     
-    URLData* p_newurl       = malloc( sizeof( URLData ) );
-    p_newurl->pa_user       = malloc( sizeof( char ) );
-    p_newurl->pa_password   = malloc( sizeof( char ) );
-    p_newurl->pa_plainurl   = malloc( sizeof( char ) * ( strlen( pa_url ) + 1 ) );
+    URLData* p_newurl       = ( URLData* )malloc( sizeof( URLData ) );
+    p_newurl->pa_user       = ( char* )malloc( sizeof( char ) );
+    p_newurl->pa_password   = ( char* )malloc( sizeof( char ) );
+    p_newurl->pa_plainurl   = ( char* )malloc( sizeof( char ) * ( strlen( pa_url ) + 1 ) );
     
     p_newurl->pa_user[ 0 ]                     = '\0';
     p_newurl->pa_password[ 0 ]                 = '\0';
     p_newurl->pa_plainurl[ strlen( pa_url ) ]  = '\0';
-    strcpy( p_newurl->pa_plainurl, pa_url );
+    memcpy( ( void* )( p_newurl->pa_plainurl ), pa_url, sizeof( char ) * ( strlen( pa_url ) + 1 ) );
     
     return p_newurl;
 }
