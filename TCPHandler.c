@@ -24,6 +24,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <stdio.h>
 // =====================
 #include "TCPHandler.h"
@@ -82,6 +83,7 @@ TCPHandler* NewTCPHandler( char* pa_plainurl, unsigned int port )
         
         return NULL;
     }
+    
     else p_tcph->socketfd = fd;
     
     // declares the remote server info
@@ -103,7 +105,10 @@ TCPHandler* NewTCPHandler( char* pa_plainurl, unsigned int port )
         return NULL;
     }
     
-    else return p_tcph; // the connection was successfuly established
+    else {
+        fcntl( p_tcph->socketfd, F_SETFL, O_NONBLOCK ); // non-blocking socket
+        return p_tcph; // the connection was successfuly established
+    }
 }
 
 // ReleaseTCPHandler
