@@ -12,8 +12,8 @@
     File:           TCPHandler.c
     Description:    implements the functions and data structure from TCPHandler.h
     Authors:        Fernando Moreira ( f.pinto.moreira@gmail.com );
-    Version:        xx.xx
-    Last Update:    dd-mm-yyyy - hh:mm GMT
+    Version:        0.1
+    Last Update:    08-12-2010 - 22:53 GMT
    =============================================================================== */
 
 
@@ -158,4 +158,22 @@ unsigned int getRemotePort( TCPHandler* p_tcph )
         return 0;
     
     else return p_tcph->remoteport;
+}
+
+// WriteToRemote
+int WriteToRemote( TCPHandler* p_tcph, void* p_data, unsigned int len)
+{
+    if( !p_tcph || !p_data )
+        return -2;
+    
+    else return send( p_tcph->socketfd, p_data, len, 0 );
+}
+
+// ReadFromRemote
+int ReadFromRemote( TCPHandler* p_tcph, void* p_buffer, unsigned int len )
+{
+    if( !p_tcph || !p_buffer )
+        return -2;
+    
+    else return recv( p_tcph->socketfd, p_buffer, len, 0 );
 }

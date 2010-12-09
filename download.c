@@ -19,14 +19,16 @@ int main( int argc, char** argv )
     
     // parses the ftp url and fetches the required fields
     //URLData* p_urldata = ParseFTPURL( argv[ 1 ] );
-    URLData* p_urldata = ParseFTPURL( "necg.fe.up.pt" );
+    URLData* p_urldata = ParseFTPURL( "ftp://ftp.up.pt/pub/mozilla/" );
 
     
-    char* pa_plainurl = getPlainUrl( p_urldata );
+    char* pa_hostname = getHostName( p_urldata );
+    char* pa_path     = getUrlPath( p_urldata );
     char* pa_user     = getUser( p_urldata );
     char* pa_password = getPassword( p_urldata );
     
-    printf( "Host Name: %s\n", pa_plainurl );
+    printf( "Host Name: %s\n", pa_hostname );
+    printf( "Url Path: %s\n", pa_path );
     printf( "User: %s\n", pa_user );
     printf( "Password: " );
     
@@ -39,7 +41,7 @@ int main( int argc, char** argv )
     printf( "\n\n" );
     
     // tries to open a new tcp connection
-    TCPHandler* p_cmd = NewTCPHandler( pa_plainurl, 21 );
+    TCPHandler* p_cmd = NewTCPHandler( pa_hostname, 21 );
     
     // failed to open a connection to the ftp server
     if( NULL == p_cmd )

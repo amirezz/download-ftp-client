@@ -11,8 +11,8 @@
 /*!
  \file      URLParser.h
  \author    Fernando Moreira ( f.pinto.moreira@gmail.com );
- \version   xx.xx
- \date      dd-mm-yyyy - hh:mm GMT
+ \version   0.1
+ \date      08-12-2010 - 22:53 GMT
  
  contains a set of functions and data structures that aid the parsing of a FTP url.
  
@@ -48,18 +48,21 @@ void ReleaseURLData( URLData* p_urldata );
 
 /*!
  *  returns a null ended string representing the user field of an ftp url
- *  returns \e NULL if no user is declared in the url
+ *  returns an empty string if no user is declared in the url
  */
 char* getUser( URLData* p_urldata );
 
 /*!
  *  returns a null ended string representing the password field of an ftp url
- *  returns \e NULL if no password is declared in the url
+ *  returns an empty string if no password is declared in the url
  */
 char* getPassword( URLData* p_urldata );
 
-//! returns a null ended string representing the plain ftp url: user and password fiels are striped out
-char* getPlainUrl( URLData* p_urldata );
+//! returns the host name of a ftp url
+char* getHostName( URLData* p_urldata );
+
+//! returns the path of a ftp url
+char* getUrlPath( URLData* p_urldata );
 
 
 /*! parses a ftp url getting the user, password and plain url if any

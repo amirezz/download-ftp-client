@@ -11,8 +11,8 @@
 /*!
  \file      TCPHandler.h
  \author    Fernando Moreira ( f.pinto.moreira@gmail.com );
- \version   xx.xx
- \date      dd-mm-yyyy - hh:mm GMT
+ \version   0.1
+ \date      08-12-2010 - 22:53 GMT
  
  wraps a tcp based network connection. client side only.
 */
@@ -32,8 +32,8 @@ char* getRemoteName( TCPHandler* p_tcph );
 char* getRemoteIP( TCPHandler* p_tcph );
 unsigned int getRemotePort( TCPHandler* p_tcph );
 
-int WriteToRemote( TCPHandler* p_tcph, void* p_data, unsigned int len );
 int ReadFromRemote( TCPHandler* p_tcph, void* p_buffer, unsigned int len );
+int WriteToRemote( TCPHandler* p_tcph, void* p_data, unsigned int len );
 
 
 
