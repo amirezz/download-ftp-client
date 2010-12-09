@@ -20,7 +20,7 @@ int main( int argc, char** argv )
     
     // parses the ftp url and fetches the required fields
     //URLData* p_urldata = ParseFTPURL( argv[ 1 ] );
-    URLData* p_urldata = ParseFTPURL( "ftp://anonymous:ei06120@ftp.fe.up.pt/pub/Deec/jbarbosa/tese.pdf" );
+    URLData* p_urldata = ParseFTPURL( "ftp://anonymous:anonymous@ftp.fe.up.pt/pub/Deec/jbarbosa/tese.pdf" );
 
     
     char* pa_hostname = getHostName( p_urldata );
@@ -52,17 +52,6 @@ int main( int argc, char** argv )
     printf( "Remote Server Name: %s \n", getRemoteName( p_cmd ) );
     printf( "Remote Server IP: %s \n", getRemoteIP( p_cmd ) );
     printf( "Remote Server Port: %d \n\n", getRemotePort( p_cmd ) );
-    
-    char buffer[1000];
-    
-    int len = ReadFromRemote( p_cmd, ( void* )buffer, 100 );
-    WriteToRemote( p_cmd, ( void* )"user anonymous\n\r", strlen( "user anonymous\n\r" ) );
-    len = ReadFromRemote( p_cmd, ( void* )buffer, 100 );
-    WriteToRemote( p_cmd, ( void* )"pass -ei06120\n\r", strlen( "pass -ei06120\n\r" ) );
-    len = ReadFromRemote( p_cmd, ( void* )buffer, 1000 );
-    WriteToRemote( p_cmd, ( void* )"pasv\n\r", 6 );
-    len = ReadFromRemote( p_cmd, ( void* )buffer, 100 );
-    
     
     //ReleaseTCPHandler( p_data ); // releases the data connection
     ReleaseTCPHandler( p_cmd );  // releases the comand connection
