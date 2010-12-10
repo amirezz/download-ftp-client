@@ -14,7 +14,8 @@
  \version   xx.xx
  \date      dd-mm-yyyy - hh:mm GMT
  
- <extended description>
+ wraps a tcp based connection to a ftp server.
+ provides an interface for basic io ops so far.
 */
 
 #ifndef __FTP_HANDLER__
@@ -27,12 +28,14 @@
 
 typedef struct FTPHandler FTPHandler;
 
-FTPHandler* OpenFTPChannel( TCPHandler* p_cmd, char* pa_user, char* pa_password );
-FTPHandler* CloseFTPChannel( FTPHandler* p_ftph );
+FTPHandler* OpenFTPChannel( TCPHandler* p_cmd, char* pa_user, char* pa_pass );
+void CloseFTPChannel( FTPHandler* p_ftph );
 
 int PassiveMode( FTPHandler* p_ftph );
-int WriteToFTP( FTPHandler* p_ftph );
-int ReadFromFTP( FTPHandler* p_ftph );
+int WriteCmdToFTP( FTPHandler* p_ftph, char* pa_cmd );
+int ReadCmdFromFTP( FTPHandler* p_ftph, char* pa_buffer );
+int WriteDataToFTP( FTPHandler* p_ftph, void* p_data, unsigned int len );
+int ReadDataFromFTP( FTPHandler* p_ftph, void* p_buffer, unsigned int len );
 
 
 

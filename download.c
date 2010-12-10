@@ -3,6 +3,7 @@
 // =====================
 #include "URLParser.h"
 #include "TCPHandler.h"
+#include "FTPHandler.h"
 
 
 
@@ -20,8 +21,7 @@ int main( int argc, char** argv )
     
     // parses the ftp url and fetches the required fields
     //URLData* p_urldata = ParseFTPURL( argv[ 1 ] );
-    URLData* p_urldata = ParseFTPURL( "ftp://anonymous:anonymous@ftp.fe.up.pt/pub/Deec/jbarbosa/tese.pdf" );
-
+    URLData* p_urldata = ParseFTPURL( "ftp://anonymous:-anonymous@ftp.fe.up.pt/pub/Deec/jbarbosa/tese.pdf" );
     
     char* pa_hostname = getHostName( p_urldata );
     char* pa_path     = getUrlPath( p_urldata );
@@ -53,8 +53,26 @@ int main( int argc, char** argv )
     printf( "Remote Server IP: %s \n", getRemoteIP( p_cmd ) );
     printf( "Remote Server Port: %d \n\n", getRemotePort( p_cmd ) );
     
-    //ReleaseTCPHandler( p_data ); // releases the data connection
-    ReleaseTCPHandler( p_cmd );  // releases the comand connection
+    // opens a new FTP channel
+    FTPHandler* p_ftph = OpenFTPChannel( p_cmd, pa_user, pa_password );
+    
+    if( NULL == p_ftph ) { // ftp authentication failed
+        printf( "download ftp client - failed ftp authentication \n" );
+        ReleaseTCPHandler( p_cmd );
+    }
+    
+    // and activates the passive mode
+    if( -1 == PassiveMode( p_ftph ) ) {
+        printf( "download ftp client - failed to request the passive mode \n" );
+        CloseFTPChannel( p_ftph );
+        
+        return -1;
+    }
+    
+    else {
+        CloseFTPChannel( p_ftph );
+    }
+
     
     return 0;
 }
