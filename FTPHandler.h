@@ -11,8 +11,8 @@
 /*!
  \file      FTPHandler.h
  \author    Fernando Moreira ( f.pinto.moreira@gmail.com );
- \version   xx.xx
- \date      dd-mm-yyyy - hh:mm GMT
+ \version   0.1
+ \date      14-12-2010 - 11:09 GMT
  
  wraps a tcp based connection to a ftp server.
  provides an interface for basic io ops so far.

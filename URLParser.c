@@ -114,7 +114,7 @@ URLData* ParseFTPURL( char* pa_url )
     char host[ 20 + 1 ];     // remote host name buffer
     char path[ 100 +1 ];     // remote host directory path buffer
     
-    int result = sscanf( pa_url, "ftp://%20[^:]:%20[^@]@%20[^/]/%s", name, password, host, path );
+    int result = sscanf( pa_url, "ftp://%20[^:]:%20[^@]@%20[^/]/%100[^\0]\0", name, password, host, path );
     if( 4 == result ){
         p_newurl->pa_user = ( char* )malloc( sizeof( char ) * ( strlen( name ) + 1 ) );
         strcpy( p_newurl->pa_user, name );

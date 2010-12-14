@@ -12,8 +12,8 @@
     File:           ByteBuffer.c
     Description:    implements the functions and data structure from ByteBuffer.h
     Authors:        Fernando Moreira ( f.pinto.moreira@gmail.com );
-    Version:        xx.xx
-    Last Update:    dd-mm-yyyy - hh:mm GMT
+    Version:        0.2
+    Last Update:    13-12-2010 - 20:20 GMT
    =============================================================================== */
 
 

@@ -12,8 +12,8 @@
     File:           FTPHandler.c
     Description:    implements the functions and data structure from TCPHandler.h
     Authors:        Fernando Moreira ( f.pinto.moreira@gmail.com );
-    Version:        xx.xx
-    Last Update:    dd-mm-yyyy - hh:mm GMT
+    Version:        0.1
+    Last Update:    14-12-2010 - 11:09 GMT
    =============================================================================== */
 
 
@@ -48,7 +48,7 @@ FTPHandler* OpenFTPChannel( TCPHandler* p_cmd, char* pa_user, char* pa_pass )
     
     // reads the welcome message
     ReadCmdFromFTP( p_ftph, answer );
-    printf( "server reply: %s\n", answer );
+    printf( "server reply:\n%s\n", answer );
     
     // sends the 'user' command
     ByteBuffer* p_bb = CreateByteBuffer();
@@ -59,7 +59,7 @@ FTPHandler* OpenFTPChannel( TCPHandler* p_cmd, char* pa_user, char* pa_pass )
     
     // reads the answer
     ReadCmdFromFTP( p_ftph, answer );
-    printf( "server reply: %s\n", answer );
+    printf( "server reply:\n%s\n", answer );
     
     // sends the 'pass' cmd
     MakeEmpty( p_bb );
@@ -70,7 +70,7 @@ FTPHandler* OpenFTPChannel( TCPHandler* p_cmd, char* pa_user, char* pa_pass )
     
     // reads the answer
     ReadCmdFromFTP( p_ftph, answer );
-    printf( "server reply: %s\n", answer );
+    printf( "server reply:\n%s\n", answer );
     
     // the user was successfuly authenticated
     ReleaseByteBuffer( p_bb );
@@ -106,7 +106,7 @@ int PassiveMode( FTPHandler* p_ftph )
     // reads the welcome message
     char answer[ 500 ];
     ReadCmdFromFTP( p_ftph, answer );
-    printf( "server reply: %s\n", answer );
+    printf( "server reply:\n%s\n", answer );
     
     // checks the answer
     int port         = 0;
@@ -205,7 +205,7 @@ int ReadCmdFromFTP( FTPHandler* p_ftph, char* pa_buffer )
             }
         }
         
-        usleep( 200000 ); // 200 milisseconds
+        usleep( 200000 ); // 200 milisseconds to deal with the latency of an ascii reply
     }
     while( read_bytes > 0 );
     
@@ -235,26 +235,24 @@ int ReadDataFromFTP( FTPHandler* p_ftph, void* p_buffer, unsigned int len )
     if( !p_ftph || !p_buffer )
         return -1;
 
-    char* p_buffer_alias    = ( char* )p_buffer;
-    char bytebuffer         = '\0'; // self explains
+    char bytebuffer         = '\0'; // self explanatory
     unsigned int read_bytes = 0;    // total number of read bytes
-    unsigned int accum      = 0;    // number of bytes read in each pass
-    do {
-        accum = 0;
+    int result              = 0;    // ReadFromRemote return code
+    
+    while( len > 0 ) {
         
-        while( ( ReadFromRemote( p_ftph->p_cmd, ( void* )&bytebuffer, 1 ) > 0 ) &&
-               ( len > 0 ) ) {
-            
-            *p_buffer_alias = bytebuffer;
+        result = ReadFromRemote( p_ftph->p_data, ( void* )&bytebuffer, 1 );
+        
+        if( result > 0 ) {
+            *(( char* )p_buffer ) = bytebuffer;
 
-            ++p_buffer_alias;
+            p_buffer = (( char* )p_buffer + 1 );
             ++read_bytes;
             --len;
         }
         
-        usleep( 200000 ); // 200 milisseconds
+        else usleep( 1000 ); // 1 milissecond sleep to deal with the connection's latency
     }
-    while( accum > 0 );
     
     return read_bytes;
 }
