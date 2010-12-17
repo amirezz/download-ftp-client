@@ -10,6 +10,9 @@
 
 int main( int argc, char** argv )
 {
+    // here's a sample a sample call
+    // prompt > ./download ftp://ftp.up.pt/pub/mozilla/firefox/releases/4.0b7/linux-i686/pt-PT/firefox-4.0b7.tar.bz2
+    
     // possible invalid usage
     if( argc < 2 )
     {
